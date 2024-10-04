@@ -13,7 +13,7 @@
         <v-row v-if="loadingList" justify="center">
           <v-progress-circular indeterminate color="primary" size="60"></v-progress-circular>
         </v-row>
-        <v-row v-else>
+        <v-row v-else-if="urls.length > 0">
           <v-row class="grid-header">
             <v-col cols="1">ID</v-col>
             <v-col cols="1">Code</v-col>
@@ -37,6 +37,13 @@
             </v-col>
           </v-row>
         </v-row>
+        <v-banner v-else
+          color="info"
+          icon="$info"
+          lines="one"
+          text="There is nothing here to see ... Move along!"
+          :stacked="false"
+        ></v-banner>
       </v-container>
 
       <!-- Modal -->
@@ -79,7 +86,7 @@ export default {
         const response = await api.get(`/list?user_identifier=${userId.value}`);
         urls.value = response.data.data.urls;
       } catch (err) {
-        toaster.error(err, {
+        toaster.error(err.response.data.message, {
           position: 'bottom-left',
           duration: 5000,
           queue: true
