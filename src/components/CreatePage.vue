@@ -55,9 +55,8 @@ export default {
           original_url: originalUrl.value,
           user_identifier: userId.value,
         });
-        console.log(response);
         if (response.status === 201) {
-          toaster.success('URL saved and shortened!', {
+          toaster.success(response.data.message, {
             position: 'bottom-left',
             duration: 5000,
             queue: true
